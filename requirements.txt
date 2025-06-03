@@ -1,0 +1,21 @@
+# Knowledge Base CLI - Dependências
+
+# Core dependencies
+# Nenhuma dependência externa necessária para a versão básica
+# O projeto usa apenas a biblioteca padrão do Python
+
+# Desenvolvimento (opcional)
+pytest>=7.0.0
+black>=22.0.0
+flake8>=5.0.0
+
+# Futuras funcionalidades (Feature-003)
+# fastapi>=0.100.0
+# uvicorn>=0.20.0
+# redis>=4.5.0
+# psycopg2-binary>=2.9.0
+# elasticsearch>=8.0.0
+
+# Deploy e CI/CD
+# github3.py>=4.0.0
+# python-dotenv>=1.0.0
