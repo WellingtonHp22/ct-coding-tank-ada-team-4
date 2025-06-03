@@ -1,21 +1,25 @@
-# Knowledge Base CLI - Dependências
+# Knowledge Base CLI - Dependências Python
+# Team 4 - Coding Tank ADA
 
-# Core dependencies
-# Nenhuma dependência externa necessária para a versão básica
-# O projeto usa apenas a biblioteca padrão do Python
+# Biblioteca padrão Python - não requer instalação adicional
+# Este projeto utiliza apenas bibliotecas nativas do Python 3.7+
 
-# Desenvolvimento (opcional)
-pytest>=7.0.0
-black>=22.0.0
-flake8>=5.0.0
+# Bibliotecas utilizadas (todas nativas):
+# - os: manipulação de arquivos e diretórios
+# - sys: parâmetros e funções específicas do sistema
+# - re: expressões regulares para processamento de texto
+# - typing: suporte a type hints
+# - unicodedata: normalização de texto Unicode
+# - argparse: parsing de argumentos da linha de comando
+# - unittest: framework de testes
+# - tempfile: criação de arquivos temporários para testes
+# - shutil: operações de alto nível em arquivos
 
-# Futuras funcionalidades (Feature-003)
-# fastapi>=0.100.0
-# uvicorn>=0.20.0
-# redis>=4.5.0
-# psycopg2-binary>=2.9.0
-# elasticsearch>=8.0.0
+# Para desenvolvimento (opcionais):
+# pytest>=6.0.0          # Framework de testes alternativo
+# black>=21.0.0           # Formatador de código
+# flake8>=3.8.0          # Linter para verificação de código
+# mypy>=0.800            # Verificador de tipos estáticos
 
-# Deploy e CI/CD
-# github3.py>=4.0.0
-# python-dotenv>=1.0.0
+# Nota: Este projeto foi desenvolvido para ser executado com Python padrão
+# sem dependências externas, conforme requisitos do desafio.

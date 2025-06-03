@@ -1,96 +1,33 @@
-# Knowledge Base CLI - Sistema de Busca Inteligente
+# Avaliação Coding Tank - Desafio Knowledge Base CLI
 
-## Visão Geral
+### Instruções importantes
 
-O Knowledge Base CLI é um sistema avançado de busca e gerenciamento de bases de conhecimento, projetado para lidar eficientemente com grandes volumes de dados textuais estruturados.
+Crie um repositório git com o nome `ct-coding-tank-ada-team-<NUM>` (substituindo o num pelo número do time). 
+Ao final do projeto, enviar o repositório do git utilizando git archive: `git archive --format=zip --output /full/path/to/zipfile.zip master`.
 
-## Características Principais
+Cada integrante da equipe deve criar uma das features descritas abaixo dentro do horário de aula, sendo o envio ao final desta.
+Ainda sobre o envio todos os integrantes da equipe devem enviar a mesma solução no LMS, com todas as funcionalidades do time.
 
-### 🔍 Busca Binária Otimizada
-- Complexidade O(log n) para buscas em arquivos grandes
-- Acesso direto usando seek() para máxima performance
-- Suporte a linhas de tamanho fixo (200 caracteres)
+Durante a apresentação, podem ser indicados possíveis correções, porém, haverá penalização por número de correções 
+efetuadas (se entende por correção cada trecho de código que resolve um determinado único problema).
 
-### 📊 Dados Estruturados
-- Formato padronizado: `ID-XXXXXX | Título | Autor | Descrição`
-- IDs ordenados mas não sequenciais
-- Busca por ID exato ou intervalo de IDs
+Nesta avaliação, serão considerados primariamente apenas as soluções que utilizem os conteúdos ensinados em aula. 
+**Uso de conteúdo extra, terá o mesmo peso independente da quantidade e este é 10!**
 
-### 📚 Biblioteca Digital
-- Acervo de literatura brasileira clássica
-- Obras de Machado de Assis, José de Alencar, Aluísio Azevedo
-- Metadados completos para cada obra
+O uso de inteligências artificiais é encorajado. Porém, não se esqueça de entender bem a solução e validar se esta 
+atende aos requisitos do seu projeto antes de integrar a mesma.
 
-## Funcionalidades Implementadas
+Cada feature descrita abaixo equivale a 25 pontos da nota final, onde:
+- **15 pontos**: (critério exato - 15 == 100% dos testes) Testes automatizados
+- **5 pontos**: (critério subjetivo - notas RUIM-0 / REGULAR-1/BOA-3/EXCELENTE-5) Apresentação e documentação
+  - **RUIM-0**: Não soube apresentar ou documentar a solução, ou não fez isso
+  - **REGULAR-1**: Apresentou solução ou documentação parcial, não tendo feito os dois 
+  - **BOM-3**: Apresentou solução completa, porém está deixou pontos de lado ou que não foram bem descritos.
+  - **EXCELENTE-5**: Apresentou a solução de maneira excelente, de forma clara e concisa sem deixar pontos de lado
+- **5 pontos**: (critério subjetivo - notas RUIM-0/REGULAR-1/BOA-3/EXCELENTE-5) Organização da solução (uso de padrões da linguagem para facilitar manutenção)
+  - **RUIM-0**: Não soube apresentar ou documentar a solução, ou não fez isso
+  - **REGULAR-1**: Apresentou solução ou documentação parcial, não tendo feito os dois 
+  - **BOM-3**: Apresentou solução completa, porém está deixou pontos de lado ou que não foram bem descritos.
+  - **EXCELENTE-5**: Apresentou a solução de maneira excelente, de forma clara e concisa sem deixar pontos de lado
 
-### FEATURE-001: Busca por Conteúdo Exato e Intervalos
-- **Busca por ID Exato**: Localiza registro específico pelo identificador
-- **Busca por Intervalo**: Retorna todos os registros dentro de um range
-- **Performance Garantida**: Usa busca binária em todas as operações
-- **Formato Padronizado**: Saída estruturada e consistente
-
-## Arquitetura Técnica
-
-```
-┌─────────────────────────────────────┐
-│           CLI Interface             │
-├─────────────────────────────────────┤
-│        Knowledge Base Core          │
-│  ┌─────────────┬─────────────────┐  │
-│  │ Binary      │ File Management │  │
-│  │ Search      │ & Indexing      │  │
-│  └─────────────┴─────────────────┘  │
-├─────────────────────────────────────┤
-│        Structured Data Files        │
-│    (fictional_books.txt + books/)   │
-└─────────────────────────────────────┘
-```
-
-## Casos de Uso
-
-1. **Pesquisa Acadêmica**: Localização rápida de obras literárias
-2. **Análise Literária**: Comparação entre autores e períodos
-3. **Catalogação**: Gerenciamento de acervos bibliográficos
-4. **Educação**: Ferramenta didática para estudo de literatura
-
-## 🚀 Deploy e Colaboração
-
-### Opções de Repositório
-
-**Repositório Principal (requer permissão):**
-```
-https://github.com/moroni646/ct-coding-tank-ada-team-4
-```
-
-**Alternativas para Deploy:**
-
-1. **Fork do Repositório**: Criar fork para sua conta
-2. **Novo Repositório**: Criar repositório próprio
-3. **Colaboração**: Solicitar acesso como colaborador
-4. **Bundle Git**: Criar arquivo bundle para transferência
-
-### Scripts Disponíveis
-
-- `deploy_github.py` - Deploy automático (requer permissão)
-- `setup_git.py` - Configuração inicial do repositório
-- `create_fork.py` - Criar fork ou novo repositório
-- `bundle_project.py` - Gerar bundle para transferência
-
-## Próximos Passos
-
-- ✅ FEATURE-001: Busca binária implementada
-- 🚧 FEATURE-002: Indexação de texto completo
-- 📋 FEATURE-003: Interface web para acesso remoto
-- 🔄 FEATURE-004: Sincronização multi-arquivo
-
-## Começando
-
-Execute o sistema com:
-```bash
-python cli.py
-```
-
-Comandos disponíveis:
-- `search ID-000001` - Busca por ID específico
-- `range ID-000001 ID-000050` - Busca por intervalo
-- `help` - Ajuda completa
+Boa avaliação!

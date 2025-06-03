@@ -1,124 +1,246 @@
-# Knowledge Base CLI - Sistema de Busca Inteligente
+# Knowledge Base CLI - Team 4
 
-## 🎯 Visão Geral
+Sistema de gerenciamento de base de conhecimento desenvolvido para o Coding Tank ADA.
 
-Sistema avançado de busca e gerenciamento de bases de conhecimento com algoritmos de busca binária otimizada.
+## 📋 Descrição
 
-## ⚡ Características Principais
+Este projeto implementa uma aplicação CLI para gerenciar uma base de conhecimento composta por múltiplos arquivos. O sistema oferece duas funcionalidades principais:
 
-- **Busca Binária O(log n)**: Performance otimizada para arquivos grandes
-- **Dados Estruturados**: Formato padronizado com IDs ordenados
-- **CLI Intuitiva**: Interface de linha de comando fácil de usar
-- **Literatura Brasileira**: Acervo com clássicos da literatura nacional
+- **FEATURE-001**: Busca eficiente por ID usando busca binária
+- **FEATURE-003**: Busca de texto em múltiplos livros usando estrutura Trie
 
-## 🚀 Quick Start
+## 🚀 Funcionalidades
 
-```bash
-# Clone o repositório
-git clone https://github.com/moroni646/ct-coding-tank-ada-team-4
-cd ct-coding-tank-ada-team-4
+### Feature 001 - Busca por ID
+- Busca por ID exato em arquivo de livros ficcionais
+- Busca por intervalo de IDs
+- Implementação usando busca binária para eficiência O(log n)
+- Suporte a arquivos grandes sem carregar tudo na memória
 
-# Execute o sistema
-python cli.py
-
-# Comandos básicos
-kb> search ID-000001
-kb> range ID-000001 ID-000020
-kb> help
-```
-
-## 📚 Funcionalidades
-
-### FEATURE-001: Busca por Conteúdo Exato e Intervalos ✅
-
-- Busca por ID exato: `search ID-000001`
-- Busca por intervalo: `range ID-000001 ID-000020`
-- Performance garantida O(log n)
-- Suporte a arquivos de qualquer tamanho
-
-### FEATURE-002: Indexação de Texto Completo 🚧
-
-- Busca em texto completo nos livros
-- Índices otimizados para performance
-- Suporte a múltiplos formatos
-
-### FEATURE-003: Interface Web 📋
-
-- API RESTful completa
-- Interface responsiva
-- Dashboard analytics
-- Sistema de recomendações
-
-## 🛠️ Tecnologias
-
-- **Python 3.8+**: Linguagem principal
-- **Algoritmos**: Busca binária, indexação
-- **CLI**: Interface de linha de comando
-- **Git**: Controle de versão
+### Feature 003 - Busca de Texto
+- Busca de frases em múltiplos arquivos de livros
+- Suporte a caracteres curinga ('.')
+- Busca pode atravessar até 2 linhas consecutivas
+- Implementação usando estrutura de dados Trie para otimização
+- Normalização automática de texto (remove acentos, pontuação)
 
 ## 📁 Estrutura do Projeto
 
 ```
-ct-coding-tank-ada-team-4/
-├── cli.py                  # Interface principal
-├── knowledge_base.py       # Engine de busca
-├── fictional_books.txt     # Dados estruturados
-├── books/                  # Biblioteca de livros
-├── docs/                   # Documentação
-├── tests/                  # Testes automatizados
-└── README.md              # Este arquivo
+Knowledge-Base-CLI/
+├── knowledge_base_cli.py      # Sistema principal
+├── test_knowledge_base.py     # Testes automatizados
+├── README.md                  # Este arquivo
+├── requirements.txt           # Dependências Python
+├── info/
+│   └── fictional_books.txt    # Base de dados de livros (Feature 001)
+└── books/                     # Diretório com arquivos de texto (Feature 003)
+    ├── 01_book_*.txt
+    ├── 02_book_*.txt
+    └── ...
 ```
 
-## 🧪 Testes
+## 🛠️ Instalação e Execução
+
+### Pré-requisitos
+- Python 3.7 ou superior
+- Sistema operacional: Windows, Linux ou macOS
+
+### Instalação
+1. Clone ou baixe o repositório
+2. Navegue até o diretório do projeto
+3. Execute o sistema:
 
 ```bash
-# Executa testes básicos
-python -m pytest tests/
-
-# Teste manual das funcionalidades
-python cli.py
+python knowledge_base_cli.py
 ```
+
+### Execução com Argumentos
+```bash
+# Busca direta por ID
+python knowledge_base_cli.py --feature 001 --id ID-000123
+
+# Busca direta por frase
+python knowledge_base_cli.py --feature 003 --phrase "o amor"
+```
+
+## 📖 Guia de Uso
+
+### Menu Principal
+Ao executar o sistema, você verá o menu principal com as seguintes opções:
+
+```
+=== MENU PRINCIPAL ===
+1. Feature 001 - Busca por ID
+2. Feature 003 - Busca de Texto
+3. Sair
+```
+
+### Feature 001 - Busca por ID
+
+#### Busca por ID Exato
+1. Selecione a opção 1 no menu principal
+2. Escolha "Buscar ID exato"
+3. Digite o ID no formato `ID-XXXXXX`
+4. O sistema retornará:
+
+```
+id: 000123
+----
+titulo: Dom Casmurro
+autor: Machado de Assis
+code: Romance classico brasileiro
+```
+
+#### Busca por Intervalo
+1. Selecione a opção 1 no menu principal
+2. Escolha "Buscar intervalo de IDs"
+3. Digite o ID inicial e final
+4. O sistema retornará todos os livros no intervalo
+
+### Feature 003 - Busca de Texto
+
+1. Selecione a opção 2 no menu principal
+2. Digite a frase para buscar
+3. Use '.' como caractere curinga para qualquer caractere
+4. O sistema retornará:
+
+```
+frase: "o amor"
+----
+arquivo: 01_book_test.txt
+linha: 2-2
+----
+arquivo: 03_book_example.txt
+linha: 15-16
+```
+
+## 🧪 Execução de Testes
+
+Para executar os testes automatizados:
+
+```bash
+python test_knowledge_base.py
+```
+
+Os testes cobrem:
+- ✅ Funcionalidade da estrutura Trie
+- ✅ Busca binária por ID
+- ✅ Busca por intervalo de IDs
+- ✅ Busca de texto em arquivos
+- ✅ Normalização de texto
+- ✅ Suporte a caracteres curinga
+- ✅ Integração entre componentes
+
+## 🏗️ Arquitetura Técnica
+
+### Classe KnowledgeBaseCLI
+**Responsabilidade**: Classe principal que coordena todas as funcionalidades
+
+**Métodos principais**:
+- `binary_search_id()`: Implementa busca binária por ID
+- `search_id_range()`: Busca por intervalo usando busca binária
+- `search_text_in_books()`: Coordena busca de texto usando Trie
+- `normalize_text()`: Normaliza texto removendo acentos e pontuação
+
+### Classe Trie
+**Responsabilidade**: Estrutura de dados para busca eficiente de palavras
+
+**Características**:
+- Inserção O(m) onde m é o tamanho da palavra
+- Busca O(m) onde m é o tamanho da palavra
+- Suporte a prefixos para otimização
+
+### Algoritmos Utilizados
+
+#### Busca Binária (Feature 001)
+- **Complexidade**: O(log n)
+- **Vantagem**: Eficiente para arquivos grandes ordenados
+- **Implementação**: Usa `seek()` para acesso direto às linhas
+
+#### Trie + Pattern Matching (Feature 003)
+- **Complexidade**: O(m) para busca, onde m é o tamanho da frase
+- **Vantagem**: Busca rápida de padrões complexos
+- **Suporte**: Caracteres curinga e busca entre linhas
+
+## 📝 Formato dos Dados
+
+### Arquivo fictional_books.txt (Feature 001)
+```
+ID-XXXXXX | Título do Livro | Nome do Autor | Descrição complementar...
+```
+- Cada linha tem exatamente 200 caracteres
+- IDs são ordenados numericamente
+- Separador: ` | ` (espaço, pipe, espaço)
+
+### Arquivos de Livros (Feature 003)
+- Arquivos .txt na pasta `books/`
+- Máximo 200 caracteres por linha
+- Encoding UTF-8
+- Separação por `\n`
+
+## 🔧 Configurações
+
+### Parâmetros Configuráveis
+```python
+# Em knowledge_base_cli.py
+self.books_dir = "books"                    # Diretório dos livros
+self.fictional_books_file = "info/fictional_books.txt"  # Arquivo de IDs
+self.line_size = 200                        # Tamanho fixo das linhas
+```
+
+## 🎯 Exemplos de Uso
+
+### Exemplo 1: Busca por ID Específico
+```python
+# Via código
+kb_cli = KnowledgeBaseCLI()
+result = kb_cli.binary_search_id("info/fictional_books.txt", "ID-000123")
+```
+
+### Exemplo 2: Busca de Texto com Curinga
+```python
+# Busca "am.r" encontrará "amor"
+results = kb_cli.search_text_in_books("am.r")
+```
+
+### Exemplo 3: Busca por Intervalo
+```python
+results = kb_cli.search_id_range("info/fictional_books.txt", "ID-000100", "ID-000200")
+```
+
+## 🐛 Tratamento de Erros
+
+O sistema trata os seguintes cenários:
+- ❌ Arquivo não encontrado
+- ❌ ID inexistente
+- ❌ Formato de linha inválido
+- ❌ Erro de encoding
+- ❌ Frase não encontrada
 
 ## 📊 Performance
 
-- **Complexidade**: O(log n) para busca exata
-- **Memória**: O(1) - não carrega arquivo inteiro
-- **Escalabilidade**: Suporte a arquivos de GB
-- **Throughput**: Centenas de buscas/segundo
+### Feature 001 (Busca Binária)
+- **Arquivo 1MB**: ~10 comparações
+- **Arquivo 100MB**: ~27 comparações
+- **Arquivo 1GB**: ~30 comparações
 
-## 🤝 Contribuindo
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
-
-## 📝 Changelog
-
-### v1.0.0 - 2025-06-03
-- ✅ Implementação da busca binária
-- ✅ Interface CLI completa
-- ✅ Acervo de literatura brasileira
-- ✅ Documentação completa
-- ✅ Scripts de deploy automatizado
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+### Feature 003 (Busca com Trie)
+- **Indexação**: O(n) onde n é o número de palavras
+- **Busca**: O(m) onde m é o tamanho da frase
+- **Memória**: Eficiente, processa apenas 2 linhas por vez
 
 ## 👥 Equipe
 
-- **Desenvolvimento**: Ada Coding Tank Team 4
-- **Repositório**: https://github.com/moroni646/ct-coding-tank-ada-team-4
-- **Documentação**: [Ver docs/](docs/)
+**Team 4 - Coding Tank ADA**
+- Desenvolvido para avaliação do curso
+- Implementação das Features 001 e 003
+- Testes automatizados incluídos
 
-## 📞 Suporte
+## 📄 Licença
 
-- **Issues**: [GitHub Issues](https://github.com/moroni646/ct-coding-tank-ada-team-4/issues)
-- **Documentação**: [Wiki](https://github.com/moroni646/ct-coding-tank-ada-team-4/wiki)
-- **Email**: team4@codingtak.ada.tech
+Este projeto foi desenvolvido para fins educacionais no âmbito do Coding Tank ADA.
 
 ---
 
-⭐ Se este projeto te ajudou, considere dar uma estrela no GitHub!
+**Nota**: Este sistema foi desenvolvido seguindo os requisitos específicos do desafio, priorizando clareza, eficiência e facilidade de manutenção.
