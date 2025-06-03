@@ -1,21 +1,21 @@
-ID-000001 | Memorias Postumas de Bras Cubas | Machado de Assis | Romance inovador narrado por um defunto autor com ironia mordaz                    
-ID-000005 | Dom Casmurro | Machado de Assis | Romance sobre ciumes e desconfianca narrado por Bento Santiago                                                   
-ID-000010 | O Cortico | Aluisio Azevedo | Obra naturalista que retrata a vida em um cortico carioca do seculo XIX                                         
-ID-000015 | Iracema | Jose de Alencar | Romance indianista sobre o amor tragico entre Iracema e Martim                                                   
-ID-000020 | O Guarani | Jose de Alencar | Historia epica de amor entre Ceci e Peri no Brasil colonial                                                      
-ID-000025 | Senhora | Jose de Alencar | Romance urbano sobre Aurelia e Fernando e as convencoes sociais                                                  
-ID-000030 | A Mao e a Luva | Machado de Assis | Historia de Guiomar e Luis Alves no Rio de Janeiro imperial                                           
-ID-000035 | Helena | Machado de Assis | Drama familiar sobre segredos e paixoes proibidas na corte                                                      
-ID-000040 | Quincas Borba | Machado de Assis | Continuacao filosofica das aventuras e desventuras de Rubiao                                            
-ID-000045 | O Mulato | Aluisio Azevedo | Romance naturalista sobre preconceito racial no Maranhao                                                        
-ID-000050 | Casa de Pensao | Aluisio Azevedo | Critica social sobre a vida urbana e os costumes burgueses                                             
-ID-000055 | O Primo Basilio | Eca de Queiros | Drama sobre adulterio e hipocrisia da burguesia lisboeta                                                
-ID-000060 | Os Maias | Eca de Queiros | Retrato da decadencia da aristocracia portuguesa no seculo XIX                                                  
-ID-000065 | Lucilia Santos | Machado de Assis | Contos sobre os dilemas morais da sociedade carioca                                                     
-ID-000070 | Ressurreicao | Machado de Assis | Primeiro romance de Machado explorando ciumes e desconfianca                                                
-ID-000075 | A Escrava Isaura | Bernardo Guimaraes | Romance abolicionista sobre uma escrava de pele clara                                           
-ID-000080 | Ubirajara | Jose de Alencar | Lenda heroica dos tempos primitivos do Brasil indigena                                                           
-ID-000085 | Til | Jose de Alencar | Romance regional passado no interior paulista                                                                    
-ID-000090 | Diva | Jose de Alencar | Perfil de mulher caprichosa e seus amores conturbados                                                            
-ID-000095 | Cinco Minutos | Jose de Alencar | Novela romantica sobre um encontro casual no omnibus                                                     
+ID-000001 | Memorias Postumas de Bras Cubas | Machado de Assis | Romance inovador narrado por um defunto autor com ironia mordaz                                         
+ID-000005 | Dom Casmurro | Machado de Assis | Romance sobre ciumes e desconfianca narrado por Bento Santiago                                                                          
+ID-000010 | O Cortico | Aluisio Azevedo | Obra naturalista que retrata a vida em um cortico carioca do seculo XIX                                                                
+ID-000015 | Iracema | Jose de Alencar | Romance indianista sobre o amor tragico entre Iracema e Martim                                                                          
+ID-000020 | O Guarani | Jose de Alencar | Historia epica de amor entre Ceci e Peri no Brasil colonial                                                                              
+ID-000025 | Senhora | Jose de Alencar | Romance urbano sobre Aurelia e Fernando e as convencoes sociais                                                                           
+ID-000030 | A Mao e a Luva | Machado de Assis | Historia de Guiomar e Luis Alves no Rio de Janeiro imperial                                                                    
+ID-000035 | Helena | Machado de Assis | Drama familiar sobre segredos e paixoes proibidas na corte                                                                              
+ID-000040 | Quincas Borba | Machado de Assis | Continuacao filosofica das aventuras e desventuras de Rubiao                                                                    
+ID-000045 | O Mulato | Aluisio Azevedo | Romance naturalista sobre preconceito racial no Maranhao                                                                                
+ID-000050 | Casa de Pensao | Aluisio Azevedo | Critica social sobre a vida urbana e os costumes burgueses                                                                      
+ID-000055 | O Primo Basilio | Eca de Queiros | Drama sobre adulterio e hipocrisia da burguesia lisboeta                                                                        
+ID-000060 | Os Maias | Eca de Queiros | Retrato da decadencia da aristocracia portuguesa no seculo XIX                                                                          
+ID-000065 | Lucilia Santos | Machado de Assis | Contos sobre os dilemas morais da sociedade carioca                                                                             
+ID-000070 | Ressurreicao | Machado de Assis | Primeiro romance de Machado explorando ciumes e desconfianca                                                                        
+ID-000075 | A Escrava Isaura | Bernardo Guimaraes | Romance abolicionista sobre uma escrava de pele clara                                                                    
+ID-000080 | Ubirajara | Jose de Alencar | Lenda heroica dos tempos primitivos do Brasil indigena                                                                                   
+ID-000085 | Til | Jose de Alencar | Romance regional passado no interior paulista                                                                                            
+ID-000090 | Diva | Jose de Alencar | Perfil de mulher caprichosa e seus amores conturbados                                                                                     
+ID-000095 | Cinco Minutos | Jose de Alencar | Novela romantica sobre um encontro casual no omnibus                                                                             
 ID-000100 | A Viuvinha | Jose de Alencar | Historia de amor e morte ambientada na corte imperial
