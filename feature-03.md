@@ -245,11 +245,19 @@ GET /api/v1/auth/profile
 └─────────────────────────────────────────────────────┘
 ```
 
-## 🚀 Repositório GitHub
+## 🚀 Estratégia de Deploy
 
-**URL do Projeto:** https://github.com/moroni646/ct-coding-tank-ada-team-4
+### Opções de Repositório
 
-**Branches:**
+**Repositório Alvo:** https://github.com/moroni646/ct-coding-tank-ada-team-4
+
+**Alternativas (devido a permissões):**
+1. **Fork:** Criar fork para conta pessoal
+2. **Novo Repo:** Criar repositório independente
+3. **Colaboração:** Solicitar acesso ao repositório original
+4. **Bundle:** Transferir via arquivo bundle
+
+**Branches planejadas:**
 - `main` - Versão estável atual
 - `feature/web-interface` - Desenvolvimento da interface web
 - `develop` - Branch de desenvolvimento

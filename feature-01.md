@@ -173,7 +173,7 @@ def search_range(self, start_id, end_id):
 ## Arquivo de Dados
 
 **Local:** `fictional_books.txt`
-**Conteúdo:** 20 obras da literatura brasileira
+**Conteúdo:** 21 obras da literatura brasileira
 **Autores:** Machado de Assis, José de Alencar, Aluísio Azevedo, Eça de Queirós
 **Formato:** Rigorosamente conforme especificação (200 chars/linha)
 
@@ -203,9 +203,17 @@ kb> stats
 - **Escalabilidade:** Funciona com arquivos de qualquer tamanho
 - **Throughput:** Centenas de buscas por segundo
 
-## 🚀 Disponível no GitHub
+## 🚀 Disponibilidade no GitHub
 
-**Repositório:** https://github.com/moroni646/ct-coding-tank-ada-team-4
+**Repositório Alvo:** https://github.com/moroni646/ct-coding-tank-ada-team-4
+
+**Status do Deploy:** ⚠️ Permissão necessária para push direto
+
+**Alternativas de Deploy:**
+- Fork do repositório
+- Novo repositório na conta pessoal
+- Solicitação de acesso como colaborador
+- Bundle Git para transferência
 
 **Branch principal:** `main`
 **Tag da versão:** `v1.0.0-feature-001`

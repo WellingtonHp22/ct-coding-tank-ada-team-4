@@ -53,6 +53,29 @@ O Knowledge Base CLI é um sistema avançado de busca e gerenciamento de bases d
 3. **Catalogação**: Gerenciamento de acervos bibliográficos
 4. **Educação**: Ferramenta didática para estudo de literatura
 
+## 🚀 Deploy e Colaboração
+
+### Opções de Repositório
+
+**Repositório Principal (requer permissão):**
+```
+https://github.com/moroni646/ct-coding-tank-ada-team-4
+```
+
+**Alternativas para Deploy:**
+
+1. **Fork do Repositório**: Criar fork para sua conta
+2. **Novo Repositório**: Criar repositório próprio
+3. **Colaboração**: Solicitar acesso como colaborador
+4. **Bundle Git**: Criar arquivo bundle para transferência
+
+### Scripts Disponíveis
+
+- `deploy_github.py` - Deploy automático (requer permissão)
+- `setup_git.py` - Configuração inicial do repositório
+- `create_fork.py` - Criar fork ou novo repositório
+- `bundle_project.py` - Gerar bundle para transferência
+
 ## Próximos Passos
 
 - ✅ FEATURE-001: Busca binária implementada
@@ -71,29 +94,3 @@ Comandos disponíveis:
 - `search ID-000001` - Busca por ID específico
 - `range ID-000001 ID-000050` - Busca por intervalo
 - `help` - Ajuda completa
-
-## 🚀 Deploy no GitHub
-
-### Repositório Oficial
-```
-https://github.com/moroni646/ct-coding-tank-ada-team-4
-```
-
-### Scripts de Deploy
-- `deploy_github.py` - Upload automático para GitHub
-- `setup_git.py` - Configuração inicial do repositório
-- `requirements.txt` - Dependências do projeto
-
-### Como fazer deploy:
-```bash
-# 1. Configurar repositório
-python setup_git.py
-
-# 2. Upload para GitHub
-python deploy_github.py
-
-# 3. Ou usar comandos Git tradicionais
-git add .
-git commit -m "Knowledge Base CLI - Sistema completo"
-git push origin main
-```
