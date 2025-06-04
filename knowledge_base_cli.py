@@ -74,7 +74,11 @@ class KnowledgeBaseCLI:
         self.books_dir = "books"
         self.fictional_books_file = "info/fictional_books.txt"
         self.line_size = 200  # Tamanho fixo de cada linha
-    
+        
+        # Cria diretório info se não existir
+        if not os.path.exists("info"):
+            os.makedirs("info")
+
     def normalize_text(self, text: str) -> str:
         """
         Normaliza texto removendo acentos, pontuação e convertendo para minúsculas
@@ -99,11 +103,25 @@ class KnowledgeBaseCLI:
         Busca binária por ID específico no arquivo
         """
         try:
+            if not os.path.exists(file_path):
+                print(f"Erro: Arquivo {file_path} não encontrado.")
+                print("Certifique-se de que o arquivo existe e está no local correto.")
+                return None
+                
             with open(file_path, 'r', encoding='utf-8') as f:
                 # Calcula o número total de linhas
                 f.seek(0, 2)  # Vai para o final do arquivo
                 file_size = f.tell()
+                
+                if file_size == 0:
+                    print("Erro: Arquivo está vazio.")
+                    return None
+                    
                 total_lines = file_size // self.line_size
+                
+                if total_lines == 0:
+                    print("Erro: Arquivo muito pequeno ou formato incorreto.")
+                    return None
                 
                 left, right = 0, total_lines - 1
                 
@@ -229,29 +247,28 @@ code: {code}"""
         normalized_phrase = self.normalize_text(phrase)
         words = normalized_phrase.split()
         
-        # Cria Trie com as palavras da frase
-        trie = Trie()
-        for word in words:
-            trie.insert(word)
+        if not words:
+            return []
         
         results = []
         books_path = self.books_dir
         
         if not os.path.exists(books_path):
+            print(f"Pasta {books_path} não encontrada!")
             return results
         
         # Processa cada arquivo de livro
         for filename in sorted(os.listdir(books_path)):
             if filename.endswith('.txt'):
                 file_path = os.path.join(books_path, filename)
-                matches = self._search_in_file(file_path, words, trie)
+                matches = self._search_in_file(file_path, words)
                 
                 for start_line, end_line in matches:
                     results.append((filename, start_line, end_line))
         
         return results
     
-    def _search_in_file(self, file_path: str, words: List[str], trie: Trie) -> List[Tuple[int, int]]:
+    def _search_in_file(self, file_path: str, words: List[str]) -> List[Tuple[int, int]]:
         """
         Busca palavras em um arquivo específico
         """
@@ -262,53 +279,54 @@ code: {code}"""
                 lines = f.readlines()
                 
                 for i in range(len(lines)):
-                    # Lê no máximo 2 linhas consecutivas (400 caracteres)
+                    # Normaliza a linha atual
+                    current_line = self.normalize_text(lines[i])
+                    
+                    # Verifica se a frase está na linha atual
+                    if self._matches_phrase_in_text(current_line, words):
+                        matches.append((i + 1, i + 1))
+                        continue
+                    
+                    # Verifica se a frase atravessa para próxima linha (máximo 2 linhas)
                     if i + 1 < len(lines):
-                        text_block = lines[i] + lines[i + 1]
-                        max_end_line = i + 2
-                    else:
-                        text_block = lines[i]
-                        max_end_line = i + 1
-                    
-                    # Normaliza o bloco de texto
-                    normalized_text = self.normalize_text(text_block)
-                    
-                    # Verifica se a sequência de palavras está presente
-                    if self._matches_phrase_pattern(normalized_text, words):
-                        # Determina as linhas exatas onde a frase foi encontrada
-                        start_line = i + 1  # +1 porque linhas começam em 1
-                        end_line = min(max_end_line, len(lines))
-                        
-                        # Verifica se a frase está toda na primeira linha
-                        first_line_normalized = self.normalize_text(lines[i])
-                        if self._matches_phrase_pattern(first_line_normalized, words):
-                            end_line = start_line
-                        
-                        matches.append((start_line, end_line))
+                        combined_text = current_line + " " + self.normalize_text(lines[i + 1])
+                        if self._matches_phrase_in_text(combined_text, words):
+                            matches.append((i + 1, i + 2))
         
         except Exception as e:
             print(f"Erro ao ler arquivo {file_path}: {e}")
         
         return matches
     
-    def _matches_phrase_pattern(self, text: str, words: List[str]) -> bool:
+    def _matches_phrase_in_text(self, text: str, words: List[str]) -> bool:
         """
-        Verifica se o texto contém a sequência de palavras na ordem correta
-        Suporta caracteres curinga '.'
+        Verifica se o texto contém a sequência de palavras
         """
-        text_words = text.split()
-        
-        if len(words) == 0:
+        if not words or not text:
             return False
         
-        # Encontra todas as posições onde a primeira palavra pode estar
+        # Busca todas as palavras da frase em sequência
+        text_words = text.split()
+        
         for start_idx in range(len(text_words)):
-            if self._word_matches(text_words[start_idx], words[0]):
-                # Verifica se as palavras seguintes estão na sequência
-                if self._check_sequence(text_words, start_idx, words):
-                    return True
+            if self._check_word_sequence(text_words, start_idx, words):
+                return True
         
         return False
+    
+    def _check_word_sequence(self, text_words: List[str], start_idx: int, pattern_words: List[str]) -> bool:
+        """
+        Verifica se a sequência de palavras do padrão está presente a partir do índice dado
+        """
+        if start_idx + len(pattern_words) > len(text_words):
+            return False
+        
+        for i, pattern_word in enumerate(pattern_words):
+            text_word = text_words[start_idx + i]
+            if not self._word_matches(text_word, pattern_word):
+                return False
+        
+        return True
     
     def _word_matches(self, text_word: str, pattern_word: str) -> bool:
         """
@@ -322,164 +340,154 @@ code: {code}"""
                 return False
         
         return True
-    
-    def _check_sequence(self, text_words: List[str], start_idx: int, pattern_words: List[str]) -> bool:
+
+    def _create_sample_fictional_books_file(self):
         """
-        Verifica se a sequência de palavras do padrão está presente no texto
+        Cria arquivo fictional_books.txt baseado nos arquivos existentes na pasta books
         """
-        current_idx = start_idx
-        pattern_idx = 0
-        
-        while pattern_idx < len(pattern_words) and current_idx < len(text_words):
-            if self._word_matches(text_words[current_idx], pattern_words[pattern_idx]):
-                pattern_idx += 1
-                if pattern_idx == len(pattern_words):
-                    return True
-            current_idx += 1
-        
-        return pattern_idx == len(pattern_words)
-    
-    def run_feature_001(self):
-        """
-        Executa a Feature 001 - Busca por ID
-        """
-        print("=== FEATURE-001: Busca por ID ===")
-        
-        while True:
-            print("\nOpções:")
-            print("1. Buscar ID exato")
-            print("2. Buscar intervalo de IDs")
-            print("3. Voltar ao menu principal")
+        try:
+            # Lista os arquivos existentes na pasta books
+            book_files = []
+            if os.path.exists(self.books_dir):
+                book_files = [f for f in os.listdir(self.books_dir) if f.endswith('.txt')]
+                book_files.sort()
             
-            choice = input("\nEscolha uma opção (1-3): ").strip()
+            # Dados baseados nos arquivos reais encontrados
+            books_data = []
             
-            if choice == "1":
-                id_input = input("Digite o ID (ex: ID-000123): ").strip()
-                print(f"id: {id_input.replace('ID-', '')}")
+            # Se existe o arquivo de Memórias Póstumas (01_book_bn000167.txt)
+            if "01_book_bn000167.txt" in book_files:
+                books_data.append(("ID-000167", "Memorias Postumas de Bras Cubas", "Machado de Assis", "Romance classico brasileiro sobre um defunto autor que narra sua historia"))
+            
+            # Adiciona outros livros baseados nos arquivos encontrados
+            for i, filename in enumerate(book_files[:19], 1):  # Máximo 19 arquivos
+                if filename == "01_book_bn000167.txt":
+                    continue  # Já adicionado acima
                 
-                result = self.binary_search_id(self.fictional_books_file, id_input)
-                if result:
-                    print(self.format_book_output(result))
+                book_id = f"ID-{i:06d}"
+                # Extrai código do arquivo se possível
+                if "_book_" in filename:
+                    code_part = filename.split("_book_")[1].replace(".txt", "")
+                    title = f"Livro {code_part.upper()}"
                 else:
-                    print("----\nID não encontrado")
+                    title = f"Obra Volume {i:02d}"
+                
+                author = "Varios Autores"
+                description = f"Texto literario numero {i:02d} para pesquisa e analise"
+                
+                books_data.append((book_id, title, author, description))
             
-            elif choice == "2":
-                start_id = input("Digite o ID inicial (ex: ID-000123): ").strip()
-                end_id = input("Digite o ID final (ex: ID-000130): ").strip()
-                
-                start_num = start_id.replace('ID-', '')
-                end_num = end_id.replace('ID-', '')
-                print(f"ids: {start_num}-{end_num}")
-                
-                results = self.search_id_range(self.fictional_books_file, start_id, end_id)
-                
-                if results:
-                    for result in results:
-                        print(self.format_book_output(result))
-                else:
-                    print("----\nNenhum ID encontrado no intervalo")
+            # Se não encontrou arquivos, cria dados de exemplo
+            if not books_data:
+                books_data = [
+                    ("ID-000001", "Memorias Postumas de Bras Cubas", "Machado de Assis", "Romance classico brasileiro sobre um defunto autor"),
+                    ("ID-000002", "Colecao Textual Volume 02", "Diversos Autores", "Textos selecionados da literatura brasileira"),
+                    ("ID-000003", "Obras Literarias Volume 03", "Varios Autores", "Compilacao de textos para estudo literario"),
+                    ("ID-000004", "Antologia Volume 04", "Organizadores", "Selecao de obras representativas para fins educacionais"),
+                    ("ID-000005", "Biblioteca Volume 05", "Editores", "Acervo de textos fundamentais da literatura"),
+                ]
             
-            elif choice == "3":
-                break
-            else:
-                print("Opção inválida!")
-    
-    def run_feature_003(self):
+            # Cria o arquivo
+            with open(self.fictional_books_file, 'w', encoding='utf-8') as f:
+                content = ""
+                for book_id, title, author, description in books_data:
+                    line = f"{book_id} | {title} | {author} | {description}"
+                    line = line.ljust(200)  # Preenche até 200 caracteres
+                    content += line + "\n"
+                
+                f.write(content.rstrip('\n'))
+                
+            print(f"Arquivo criado com {len(books_data)} livros")
+                
+        except Exception as e:
+            print(f"Erro ao criar arquivo: {e}")
+
+    def run_interactive(self):
         """
-        Executa a Feature 003 - Busca de texto
+        Sistema interativo principal
         """
-        print("=== FEATURE-003: Busca de Texto ===")
+        print("Knowledge Base CLI - Sistema de Busca")
+        print("=====================================")
+        
+        # Verifica se o arquivo fictional_books.txt existe
+        if not os.path.exists(self.fictional_books_file):
+            print("Criando arquivo fictional_books.txt...")
+            self._create_sample_fictional_books_file()
         
         while True:
-            phrase = input("\nDigite a frase para buscar (ou 'quit' para sair): ").strip()
-            
-            if phrase.lower() == 'quit':
-                break
-            
-            print(f'frase: "{phrase}"')
-            
-            results = self.search_text_in_books(phrase)
-            
-            if results:
-                for filename, start_line, end_line in results:
-                    print("----")
-                    print(f"arquivo: {filename}")
-                    if start_line == end_line:
-                        print(f"linha: {start_line}-{start_line}")
-                    else:
-                        print(f"linha: {start_line}-{end_line}")
-            else:
-                print("----")
-                print("nao encontrado")
-    
-    def run(self):
-        """
-        Método principal para executar o sistema
-        """
-        print("=" * 50)
-        print("    KNOWLEDGE BASE CLI - Team 4")
-        print("=" * 50)
-        
-        while True:
-            print("\n=== MENU PRINCIPAL ===")
-            print("1. Feature 001 - Busca por ID")
-            print("2. Feature 003 - Busca de Texto")
+            print("\nOpcoes:")
+            print("1. Buscar livro por ID")
+            print("2. Buscar texto nos livros")
             print("3. Sair")
             
-            choice = input("\nEscolha uma opção (1-3): ").strip()
+            opcao = input("\nEscolha uma opcao (1-3): ").strip()
             
-            if choice == "1":
-                self.run_feature_001()
-            elif choice == "2":
-                self.run_feature_003()
-            elif choice == "3":
-                print("\nObrigado por usar o Knowledge Base CLI!")
+            if opcao == "1":
+                self.buscar_por_id()
+            elif opcao == "2":
+                self.buscar_texto()
+            elif opcao == "3":
+                print("Saindo...")
                 break
             else:
-                print("Opção inválida! Tente novamente.")
+                print("Opcao invalida!")
 
-
-def main():
-    """
-    Função principal do programa
-    """
-    # Suporte para argumentos de linha de comando
-    parser = argparse.ArgumentParser(description='Knowledge Base CLI')
-    parser.add_argument('--feature', choices=['001', '003'], 
-                       help='Executar feature específica diretamente')
-    parser.add_argument('--id', help='ID para busca direta (Feature 001)')
-    parser.add_argument('--phrase', help='Frase para busca direta (Feature 003)')
-    
-    args = parser.parse_args()
-    
-    kb_cli = KnowledgeBaseCLI()
-    
-    # Se argumentos específicos foram fornecidos
-    if args.feature == '001' and args.id:
-        print(f"id: {args.id.replace('ID-', '')}")
-        result = kb_cli.binary_search_id(kb_cli.fictional_books_file, args.id)
-        if result:
-            print(kb_cli.format_book_output(result))
+    def buscar_por_id(self):
+        """
+        Busca interativa por ID
+        """
+        id_busca = input("Digite o ID (ex: ID-000001 ou apenas 000001): ").strip()
+        
+        if not id_busca:
+            print("ID nao pode estar vazio!")
+            return
+        
+        # Normaliza o ID
+        if not id_busca.startswith("ID-"):
+            id_busca = f"ID-{id_busca.zfill(6)}"
+        
+        print(f"Buscando: {id_busca}")
+        
+        resultado = self.binary_search_id(self.fictional_books_file, id_busca)
+        
+        if resultado:
+            print(self.format_book_output(resultado))
         else:
-            print("----\nID não encontrado")
-    elif args.feature == '003' and args.phrase:
-        print(f'frase: "{args.phrase}"')
-        results = kb_cli.search_text_in_books(args.phrase)
-        if results:
-            for filename, start_line, end_line in results:
+            print("----")
+            print("ID nao encontrado")
+
+    def buscar_texto(self):
+        """
+        Busca interativa de texto
+        """
+        frase = input("Digite a frase para buscar: ").strip()
+        
+        if not frase:
+            print("Frase nao pode estar vazia!")
+            return
+        
+        print(f'Buscando: "{frase}"')
+        
+        resultados = self.search_text_in_books(frase)
+        
+        if resultados:
+            for arquivo, linha_inicio, linha_fim in resultados:
                 print("----")
-                print(f"arquivo: {filename}")
-                if start_line == end_line:
-                    print(f"linha: {start_line}-{start_line}")
+                print(f"arquivo: {arquivo}")
+                if linha_inicio == linha_fim:
+                    print(f"linha: {linha_inicio}")
                 else:
-                    print(f"linha: {start_line}-{end_line}")
+                    print(f"linha: {linha_inicio}-{linha_fim}")
         else:
             print("----")
             print("nao encontrado")
-    else:
-        # Executa o menu interativo
-        kb_cli.run()
 
+def main():
+    """
+    Funcao principal - executa o sistema interativo
+    """
+    kb_cli = KnowledgeBaseCLI()
+    kb_cli.run_interactive()
 
 if __name__ == "__main__":
     main()
